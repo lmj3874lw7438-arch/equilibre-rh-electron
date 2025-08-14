@@ -1,0 +1,67 @@
+{
+  "name": "equilibre-rh-desktop",
+  "version": "1.0.0",
+  "description": "Équilibre RH — Desktop (Electron)",
+  "main": "main.js",
+  "author": "Equilibre RH",
+  "license": "MIT",
+  "scripts": {
+    "dev": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win nsis",
+    "embed:prepare": "rimraf app && mkdir app && mkdir app/dist && copyfiles -u 1 frontend-dist/**/* app/dist",
+    "embed:run": "npm run embed:prepare && electron ."
+  },
+  "dependencies": {
+    "electron-store": "^8.2.1"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3",
+    "rimraf": "^5.0.5",
+    "copyfiles": "^2.4.1"
+  },
+  "build": {
+    "appId": "com.equilibre.rh",
+    "productName": "Équilibre RH",
+    "files": [
+      "!frontend-dist",
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "app/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "extraResources": [
+      {
+        "from": "app/",
+        "to": "app",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Equilibre-RH-Setup-${version}.exe"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

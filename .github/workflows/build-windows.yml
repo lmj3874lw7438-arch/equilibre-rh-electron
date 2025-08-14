@@ -1,0 +1,28 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**.js'
+      - 'package.json'
+      - 'renderer/**'
+      - 'assets/**'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Set FRONTEND_URL (optional)
+        if: env.FRONTEND_URL != ''
+        run: echo "FRONTEND_URL=${{ env.FRONTEND_URL }}" >> $GITHUB_ENV
+      - run: npm run dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Equilibre-RH-Setup
+          path: dist/*.exe
