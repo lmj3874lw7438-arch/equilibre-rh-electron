@@ -13,13 +13,13 @@
     "embed:run": "npm run embed:prepare && electron ."
   },
   "dependencies": {
-    "electron-store": "^8.2.1"
+    "electron-store": "8.2.1"
   },
   "devDependencies": {
-    "electron": "^30.0.0",
-    "electron-builder": "^24.13.3",
-    "rimraf": "^5.0.5",
-    "copyfiles": "^2.4.1"
+    "electron": "30.0.9",
+    "electron-builder": "24.13.3",
+    "rimraf": "5.0.5",
+    "copyfiles": "2.4.1"
   },
   "build": {
     "appId": "com.equilibre.rh",
